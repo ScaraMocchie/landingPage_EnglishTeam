@@ -4,6 +4,7 @@ import 'package:landing_page/controller/model.dart';
 import 'package:landing_page/controller/textfield.dart';
 import 'package:landing_page/screen/reedemCode_page.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -26,25 +27,42 @@ class _LogInState extends State<LogIn> {
       },
     );
   }
-
-  void checkValue(){
+  void showLoadingDialog2(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 10),
+              Text("Loading..."),
+            ],
+          ),
+        );
+      },
+    );
+  }
+  bool checkValue(){
                           if(emailController.text == ""){
                             status = "Email could not be empty";
                             setState(() {
                               
-                            });
+                            }); return false;
                             print(status);
                           } else if(passwordController.text == ""){
                             status = "Password could not be empty";
                             setState(() {
                               
-                            });
+                            });return false;
                             print(status);
                           } else{
                             status = "";
                             setState(() {
                               
-                            });
+                            }); return true;
                             print("Success");
                           }
     }
@@ -101,9 +119,24 @@ class _LogInState extends State<LogIn> {
                       SizedBox(height: 20,),
                       InkWell(
                         onTap: ()async{
-                          checkValue();
-                        if (status ==""){
-                          showLoadingDialog(context, emailController.text);
+                          
+                        if (checkValue()==true){
+                          showLoadingDialog2(context);
+                          String emailValue=emailController.text;
+                            String passwordValue=passwordController.text;
+                            var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","login")
+                            ,body:jsonEncode([emailValue,passwordValue]));
+                            var code=response.statusCode;
+
+                            if(code==200){
+                              showLoadingDialog(context, emailValue);
+
+                            } else{
+                              setState(() {
+                                status="Account not found!";
+                              });
+                              Navigator.of(context).pop();
+                            }
                         }
                         },
                         child: Container(
@@ -184,10 +217,25 @@ class _LogInState extends State<LogIn> {
                     TextFieldCustom.TemplateTF(passwordController, "Password"),
                     SizedBox(height: 20,),
                     InkWell(
-                      onTap: () {
-                        checkValue();
-                        if (status ==""){
-                          showLoadingDialog(context, emailController.text);
+                      onTap: () async{
+                        
+                        if (checkValue()==true){
+                          showLoadingDialog2(context);
+                          String emailValue=emailController.text;
+                            String passwordValue=passwordController.text;
+                            var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","login")
+                            ,body:jsonEncode([emailValue,passwordValue]));
+                            var code=response.statusCode;
+
+                            if(code==200){
+                              showLoadingDialog(context, emailValue);
+
+                            } else{
+                              setState(() {
+                                status="Account not found!";
+                              });
+                              Navigator.of(context).pop();
+                            }
                         }
                       },
                       child: Container(

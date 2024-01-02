@@ -149,6 +149,7 @@ class _SignUpState extends State<SignUp> {
                         if(code==200){
                           showLoadingDialog(context);
                         } else if (code==403){
+                          Navigator.of(context).pop();
                           setState(() {
                                   status=data[1];
                                 });
