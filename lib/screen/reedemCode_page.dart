@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:landing_page/controller/textfield.dart';
 import 'package:http/http.dart' as http;
 import 'package:landing_page/screen/login.dart';
+import 'dart:convert';
+
 
 class ReedemCodePage extends StatefulWidget {
   final String reedemCode;
@@ -17,6 +19,9 @@ class ReedemCodePage extends StatefulWidget {
 class _ReedemCodePageState extends State<ReedemCodePage> {
   final reedemController = TextEditingController();
   bool visibility = false;
+  Color statusColor = Colors.green;
+  Icon statusIcon = Icon(Icons.check_circle_outline_rounded, size: 17, color: Colors.green,);
+  String status="";
   
 
   @override
@@ -61,22 +66,37 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                   SizedBox(height: 20,),
                   Text("Your redemption will be sent to your email", textAlign: TextAlign.center,),
                   TextFieldCustom.TemplateTF(reedemController,"Reedem Code"),
-                  Visibility(
-                    visible: visibility,
-                    child: Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.check_circle_outline_rounded, size: 17, color: Colors.green,),
-                        SizedBox(width: 5,),
-                        Text("Reedem code succesfully applied!", style: TextStyle(color: Colors.green),)
-                      ],
-                    ),
-                  )),
+                  Text(status, style: TextStyle(color: statusColor),),
                   
                   InkWell(
-                    onTap:(){ print(email);
-                    setState(() {
-                      visibility = true;
+                    onTap:(){ 
+                      // print(email);
+                    setState(() async{
+                      var reedemValue = reedemController.text;
+                      var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","validateRedeemCode")
+                      ,body:jsonEncode({"email":"<$email>","redeem":"<$reedemValue>"}
+));
+                      var code=response.statusCode;
+                      var data=jsonDecode(response.body);
+     
+                      if(code==200){
+                        setState(() {
+                          print("sukess");
+                        // statusIcon=Icon(null);
+                          status=data[0];
+                          statusColor= (status=="redeem code valid")?Colors.green:Colors.red;
+                          // statusIcon = Icon(Icons.check_circle_outline_rounded, size: 17, color: Colors.green,);
+                        // visibility = true;
+                      });}
+                      else{
+                        setState(() {
+                          // visibility = false;
+                          // statusIcon=Icon(null);
+                          status="something wrong with server";
+                          statusColor= Colors.red;
+                        });
+                      }
+
                     });
                     },
                     child: Container(

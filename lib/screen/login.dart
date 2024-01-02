@@ -226,9 +226,11 @@ class _LogInState extends State<LogIn> {
                             var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","login")
                             ,body:jsonEncode([emailValue,passwordValue]));
                             var code=response.statusCode;
+                            var data=jsonDecode(response.body);
+                            String emaill=data[1];
 
                             if(code==200){
-                              showLoadingDialog(context, emailValue);
+                              showLoadingDialog(context, emaill);
 
                             } else{
                               setState(() {
