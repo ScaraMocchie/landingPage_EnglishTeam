@@ -27,7 +27,8 @@ class _LandingPageState extends State<LandingPage> {
         actions: [Container(
           margin: EdgeInsets.only(right:width/40),
           child: TextButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (context) => LogIn()));}, child: Text("Login")),
-        )],
+        ),
+        ],
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4.0),
           child: Container(

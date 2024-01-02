@@ -12,23 +12,23 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   String status = "";
 
-  void showLoadingDialog(BuildContext context) {
+  void showLoadingDialog(BuildContext context, String email) {
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return ReedemCodePage(reedemCode: "FREETOBA");
+        return ReedemCodePage(reedemCode: "FREETOBA", email: email,);
       },
     );
   }
 
   void checkValue(){
-                          if(usernameController.text == ""){
-                            status = "Username could not be empty";
+                          if(emailController.text == ""){
+                            status = "Email could not be empty";
                             setState(() {
                               
                             });
@@ -95,14 +95,14 @@ class _LogInState extends State<LogIn> {
                         child: Text(status, style: TextStyle(color: Colors.red),)),
                       SizedBox(height: 10,),
                 
-                      TextFieldCustom.TemplateTF(usernameController, "Username"),
-                      TextFieldCustom.TemplateTF(passwordController, "password"),
+                      TextFieldCustom.TemplateTF(emailController, "Email"),
+                      TextFieldCustom.TemplateTF(passwordController, "Password"),
                       SizedBox(height: 20,),
                       InkWell(
                         onTap: ()async{
                           checkValue();
                         if (status ==""){
-                          showLoadingDialog(context);
+                          showLoadingDialog(context, emailController.text);
                         }
                         },
                         child: Container(
@@ -179,14 +179,14 @@ class _LogInState extends State<LogIn> {
                         child: Text(status, style: TextStyle(color: Colors.red),)),
                       SizedBox(height: 10,),
                    
-                    TextFieldCustom.TemplateTF(usernameController, "Username"),
-                    TextFieldCustom.TemplateTF(passwordController, "password"),
+                    TextFieldCustom.TemplateTF(emailController, "Email"),
+                    TextFieldCustom.TemplateTF(passwordController, "Password"),
                     SizedBox(height: 20,),
                     InkWell(
                       onTap: () {
                         checkValue();
                         if (status ==""){
-                          showLoadingDialog(context);
+                          showLoadingDialog(context, emailController.text);
                         }
                       },
                       child: Container(

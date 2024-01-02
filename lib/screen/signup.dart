@@ -22,7 +22,7 @@ class _SignUpState extends State<SignUp> {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return ReedemCodePage(reedemCode: "FREETOBA");
+        return ReedemCodePage(reedemCode: "FREETOBA", email: emailController.text,);
       },
     );
   }
@@ -57,7 +57,7 @@ class _SignUpState extends State<SignUp> {
                             setState(() {
                               
                             });
-                            
+
                             print("Success");
                           }
     }
