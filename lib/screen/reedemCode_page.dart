@@ -69,22 +69,31 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                   Text(status, style: TextStyle(color: statusColor),),
                   
                   InkWell(
-                    onTap:(){ 
-                      // print(email);
-                    setState(() async{
-                      var reedemValue = reedemController.text;
+                    onTap:()async{ 
+                     var reedemValue = reedemController.text;
+                     print(email);print(reedemValue);
                       var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","validateRedeemCode")
-                      ,body:jsonEncode({"email":"<$email>","redeem":"<$reedemValue>"}
+                      ,body:jsonEncode({"email":"$email","redeem":"$reedemValue"}
 ));
                       var code=response.statusCode;
                       var data=jsonDecode(response.body);
-     
                       if(code==200){
                         setState(() {
                           print("sukess");
                         // statusIcon=Icon(null);
-                          status=data[0];
-                          statusColor= (status=="redeem code valid")?Colors.green:Colors.red;
+                          int hasil=data[1];
+                          if(hasil==-1){
+                            status = "Reedem code have been used or invalid";
+                            statusColor= Colors.red;
+                          } else if(hasil==0){
+                            status = "Reedem code have been expired";
+                            statusColor= Colors.red;
+                          } else{
+                            status = "Reedem code succes!";
+                            statusColor= Colors.green;
+                          }
+                
+                          
                           // statusIcon = Icon(Icons.check_circle_outline_rounded, size: 17, color: Colors.green,);
                         // visibility = true;
                       });}
@@ -96,8 +105,7 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                           statusColor= Colors.red;
                         });
                       }
-
-                    });
+                    
                     },
                     child: Container(
                       width: 250,
