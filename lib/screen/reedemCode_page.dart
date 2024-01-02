@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 import 'package:landing_page/controller/textfield.dart';
+import 'package:http/http.dart' as http;
+import 'package:landing_page/screen/login.dart';
 
 class ReedemCodePage extends StatefulWidget {
   final String reedemCode;
@@ -43,7 +45,11 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
             child: Stack(
               children: [
                 Align(alignment: Alignment.topRight,
-                child: IconButton(icon: Icon(Icons.close_rounded), onPressed: (){ Navigator.of(context).pop();},),),
+                child: IconButton(icon: Icon(Icons.close_rounded), onPressed: (){ Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                //  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogIn()));
+                },),),
+               
                 Align(
                   alignment: Alignment.center,
                   child: Column(
@@ -53,7 +59,7 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                   Text("Thank you for pre-registering!", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                   SvgPicture.asset("assets/images/preregist_gift.svg", height: 150,),
                   SizedBox(height: 20,),
-                  Text("Your redemption have been sent to your email", textAlign: TextAlign.center,),
+                  Text("Your redemption will be sent to your email", textAlign: TextAlign.center,),
                   TextFieldCustom.TemplateTF(reedemController,"Reedem Code"),
                   Visibility(
                     visible: visibility,

@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:landing_page/controller/model.dart';
 import 'package:landing_page/controller/textfield.dart';
 import 'package:landing_page/screen/reedemCode_page.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -27,36 +29,56 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  void checkValue(){
+  void showLoadingDialog2(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 10),
+              Text("Loading..."),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  bool checkValue(){
       print(emailController.text);
                           if (emailController.text == ""){
                             setState(() {
                               status = "Email could not be empty";
                               print(status);
                             });
+                            return false;
                           } else if (RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailController.text)==false) {
                             
                             setState(() {
                               status="Please enter valid email address";
-                            });
+                            }); return false;
                           }
                           else if(usernameController.text == ""){
-                            status = "Username could not be empty";
+                            
                             setState(() {
-                              
-                            });
+                              status = "Username could not be empty";
+                            }); return false;
                             print(status);
                           } else if(passwordController.text == ""){
                             status = "Password could not be empty";
                             setState(() {
                               
-                            });
+                            }); return false;
                             print(status);
                           } else{
                             status = "";
                             setState(() {
                               
-                            });
+                            }); return true;
 
                             print("Success");
                           }
@@ -110,13 +132,30 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(height: 10,),
                       TextFieldCustom.TemplateTF(emailController, "Email"),
                       TextFieldCustom.TemplateTF(usernameController, "Username"),
-                      TextFieldCustom.TemplateTF(passwordController, "password"),
+                      TextFieldCustom.TemplateTF(passwordController, "Password"),
                       SizedBox(height: 20,),
                       InkWell(
                         onTap: ()async{
-                          checkValue();
-                        if (status ==""){
+                        if (checkValue() == true){
+                          showLoadingDialog2(context);
+                        String emailValue=emailController.text;
+                        String usernameValue=usernameController.text;
+                        String passwordValue=passwordController.text;
+                        var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","register")
+                              ,body:jsonEncode([emailValue,usernameValue,passwordValue]));
+                        var code=response.statusCode;
+                        var data=jsonDecode(response.body);
+
+                        if(code==200){
                           showLoadingDialog(context);
+                        } else if (code==403){
+                          setState(() {
+                                  status=data[1];
+                                });
+                        }
+
+                        }else{
+                          // status="data can not be empty";
                         }
                         },
                         child: Container(
@@ -194,13 +233,31 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(height: 10,),
                     TextFieldCustom.TemplateTF(emailController, "Email"),
                     TextFieldCustom.TemplateTF(usernameController, "Username"),
-                    TextFieldCustom.TemplateTF(passwordController, "password"),
+                    TextFieldCustom.TemplateTF(passwordController, "Password"),
                     SizedBox(height: 20,),
                     InkWell(
-                      onTap: () {
-                        checkValue();
-                        if (status ==""){
+                      onTap: () async{
+                       
+                        if (checkValue() == true){
+                          showLoadingDialog2(context);
+                        String emailValue=emailController.text;
+                        String usernameValue=usernameController.text;
+                        String passwordValue=passwordController.text;
+                        var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","register")
+                              ,body:jsonEncode([emailValue,usernameValue,passwordValue]));
+                        var code=response.statusCode;
+                        var data=jsonDecode(response.body);
+
+                        if(code==200){
                           showLoadingDialog(context);
+                        } else if (code==403){
+                          setState(() {
+                                  status=data[1];
+                                });
+                        }
+
+                        }else{
+                          // status="data can not be empty";
                         }
                       },
                       child: Container(

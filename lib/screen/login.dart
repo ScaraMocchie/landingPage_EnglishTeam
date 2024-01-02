@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:landing_page/controller/model.dart';
 import 'package:landing_page/controller/textfield.dart';
 import 'package:landing_page/screen/reedemCode_page.dart';
+import 'package:http/http.dart' as http;
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});

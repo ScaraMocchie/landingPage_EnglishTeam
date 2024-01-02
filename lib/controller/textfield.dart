@@ -7,6 +7,7 @@ class TextFieldCustom{
       height: 55,
       padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 10),
       child: TextFormField(
+        obscureText: (name=="Password")?true:false,
         maxLength: 24,
         controller: controller,
         decoration: InputDecoration(
