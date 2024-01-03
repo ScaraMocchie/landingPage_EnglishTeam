@@ -5,7 +5,7 @@ import 'package:landing_page/controller/textfield.dart';
 import 'package:landing_page/screen/reedemCode_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import '../controller/httpHelp.dart';
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
@@ -141,7 +141,7 @@ class _SignUpState extends State<SignUp> {
                         String emailValue=emailController.text;
                         String usernameValue=usernameController.text;
                         String passwordValue=passwordController.text;
-                        var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","register")
+                        var response= await http.post(Uri.https(Helper.baseUrl,Helper.baseEndpoint+"register")
                               ,body:jsonEncode([emailValue,usernameValue,passwordValue]));
                         var code=response.statusCode;
                         var data=jsonDecode(response.body);
@@ -244,7 +244,7 @@ class _SignUpState extends State<SignUp> {
                         String emailValue=emailController.text;
                         String usernameValue=usernameController.text;
                         String passwordValue=passwordController.text;
-                        var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","register")
+                        var response= await http.post(Uri.https(Helper.baseUrl,Helper.baseEndpoint+"register")
                               ,body:jsonEncode([emailValue,usernameValue,passwordValue]));
                         var code=response.statusCode;
                         var data=jsonDecode(response.body);

@@ -5,7 +5,7 @@ import 'package:landing_page/controller/textfield.dart';
 import 'package:http/http.dart' as http;
 import 'package:landing_page/screen/login.dart';
 import 'dart:convert';
-
+import '../controller/httpHelp.dart';
 
 class ReedemCodePage extends StatefulWidget {
   final String reedemCode;
@@ -72,7 +72,7 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                     onTap:()async{ 
                      var reedemValue = reedemController.text;
                      print(email);print(reedemValue);
-                      var response= await http.post(Uri.https("bicaraai12.risalahqz.repl.co","validateRedeemCode")
+                      var response= await http.post(Uri.https(Helper.baseUrl,Helper.baseEndpoint+"validateRedeemCode")
                       ,body:jsonEncode({"email":"$email","redeem":"$reedemValue"}
 ));
                       var code=response.statusCode;
