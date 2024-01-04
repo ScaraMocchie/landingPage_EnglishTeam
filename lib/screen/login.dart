@@ -49,7 +49,7 @@ class _LogInState extends State<LogIn> {
   }
   bool checkValue(){
                           if(emailController.text == ""){
-                            status = "Email could not be empty";
+                            status = "Username could not be empty";
                             setState(() {
                               
                             }); return false;
@@ -254,7 +254,7 @@ class _LogInState extends State<LogIn> {
                           child: Text(status, style: TextStyle(color: Colors.red),)),
                         SizedBox(height: 10,),
                      
-                      TextFieldCustom.TemplateTF(emailController, "Email"),
+                      TextFieldCustom.TemplateTF(emailController, "Username"),
                       TextFieldCustom.TemplateTF(passwordController, "Password"),
                       SizedBox(height: 20,),
                       InkWell(
