@@ -114,77 +114,90 @@ class _SignUpState extends State<SignUp> {
         ),
         Center(
           child: SingleChildScrollView(
-            child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 35),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  height: 700,
-                  width: width*90/100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 20),
-                        child: SvgPicture.asset("assets/images/sign up.svg", width: 250,),
+            child: Stack(
+              children: [Center(
+                child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 35),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      height: 700,
+                      width: width*90/100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10)
                       ),
-                      Text("Sign Up", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, letterSpacing: 3),),
-                      SizedBox(height: 10,),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        alignment: Alignment.centerLeft,
-                        child: Text(status, style: TextStyle(color: Colors.red),)),
-                      SizedBox(height: 10,),
-                      TextFieldCustom.TemplateTF(emailController, "Email"),
-                      TextFieldCustom.TemplateTF(usernameController, "Username"),
-                      TextFieldCustom.TemplateTF(passwordController, "Password"),
-                      SizedBox(height: 20,),
-                      InkWell(
-                        onTap: ()async{
-                        if (checkValue() == true){
-                          showLoadingDialog2(context);
-                        String emailValue=emailController.text;
-                        String usernameValue=usernameController.text;
-                        String passwordValue=passwordController.text;
-                        var response= await http.post(Uri.https(Helper.baseUrl,Helper.baseEndpoint+"register")
-                              ,body:jsonEncode([emailValue,usernameValue,passwordValue]));
-                        var code=response.statusCode;
-                        var data=jsonDecode(response.body);
-
-                        if(code==200){
-                          showLoadingDialog(context);
-                        } else if (code==403){
-                          Navigator.of(context).pop();
-                          setState(() {
-                                  status=data[1];
-                                });
-                        }
-
-                        }else{
-                          // status="data can not be empty";
-                        }
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: width*3/10,
-                          height: 45,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff528DE7),
-                            borderRadius: BorderRadius.circular(10)
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(bottom: 20),
+                            child: SvgPicture.asset("assets/images/sign up.svg", width: 250,),
                           ),
-                          child: Text("Sign Up", style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20
-                          ),),
-                        ),
+                          Text("Sign Up", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, letterSpacing: 3),),
+                          SizedBox(height: 10,),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            alignment: Alignment.centerLeft,
+                            child: Text(status, style: TextStyle(color: Colors.red),)),
+                          SizedBox(height: 10,),
+                          TextFieldCustom.TemplateTF(emailController, "Email"),
+                          TextFieldCustom.TemplateTF(usernameController, "Username"),
+                          TextFieldCustom.TemplateTF(passwordController, "Password"),
+                          SizedBox(height: 20,),
+                          InkWell(
+                            onTap: ()async{
+                            if (checkValue() == true){
+                              showLoadingDialog2(context);
+                            String emailValue=emailController.text;
+                            String usernameValue=usernameController.text;
+                            String passwordValue=passwordController.text;
+                            var response= await http.post(Uri.https(Helper.baseUrl,Helper.baseEndpoint+"register")
+                                  ,body:jsonEncode([emailValue,usernameValue,passwordValue]));
+                            var code=response.statusCode;
+                            var data=jsonDecode(response.body);
+              
+                            if(code==200){
+                              showLoadingDialog(context);
+                            } else if (code==403){
+                              Navigator.of(context).pop();
+                              setState(() {
+                                      status=data[1];
+                                    });
+                            }
+              
+                            }else{
+                              // status="data can not be empty";
+                            }
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: width*3/10,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                color: const Color(0xff528DE7),
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: Text("Sign Up", style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20
+                              ),),
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          toLogin()
+                        ],
                       ),
-                      SizedBox(height: 10,),
-                      toLogin()
-                    ],
-                  ),
-                ),
+                    ),
+              ),
+              Align(
+          alignment: Alignment.topRight,
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 38, horizontal: 25),
+            child: IconButton(icon: Icon(Icons.close_rounded), onPressed: (){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
+            },),
+          ),
+        )]
+            ),
           ),
         )
       ],
@@ -290,6 +303,15 @@ class _SignUpState extends State<SignUp> {
                 ),
               )
             ],
+          ),
+        ),
+        Align(
+            alignment: Alignment.topRight,
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 20+(height-80*height/100)/2, horizontal: (width-width*40/100)/4),
+            child: IconButton(icon: Icon(Icons.close_rounded), onPressed: (){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
+            },),
           ),
         )
       ],

@@ -20,6 +20,7 @@ class _LandingPageState extends State<LandingPage> {
     var width = size.width;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Image.asset(
           "assets/images/logo.png",
           width: 100,
