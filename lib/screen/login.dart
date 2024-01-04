@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:landing_page/controller/model.dart';
 import 'package:landing_page/controller/textfield.dart';
+import 'package:landing_page/screen/landingpage.dart';
 import 'package:landing_page/screen/reedemCode_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:landing_page/screen/signup.dart';
 import 'dart:convert';
 import '../controller/httpHelp.dart';
 class LogIn extends StatefulWidget {
@@ -73,8 +75,13 @@ class _LogInState extends State<LogIn> {
     var height = size.height;
     var width = size.width;
 
-    return Scaffold(
-      body: (width<height)?signUpMobile(height, width):signUpDesktop(height, width),
+    return WillPopScope(
+      onWillPop: ()async{
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
+      return true;},
+      child: Scaffold(
+        body: (width<height)?signUpMobile(height, width):signUpDesktop(height, width),
+      ),
     );
   }
 
@@ -129,7 +136,9 @@ class _LogInState extends State<LogIn> {
                             var code=response.statusCode;
 
                             if(code==200){
-                              showLoadingDialog(context, emailValue);
+                              var data=jsonDecode(response.body);
+                              String emaill=data[1];
+                              showLoadingDialog(context, emaill);
 
                             } else{
                               setState(() {
@@ -152,7 +161,9 @@ class _LogInState extends State<LogIn> {
                             fontSize: 20
                           ),),
                         ),
-                      )
+                      ),
+                      SizedBox(height: 10,),
+                      toRegister()
                     ],
                   ),
                 ),
@@ -160,6 +171,21 @@ class _LogInState extends State<LogIn> {
         )
       ],
     );
+  }
+
+  Row toRegister() {
+    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Not a member?"),
+                        SizedBox(width: 5,),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>SignUp()));
+                          },
+                          child: Text("Register", style: TextStyle(color: const Color(0xff528DE7), fontWeight: FontWeight.bold),),)
+                      ],
+                    );
   }
 
   Stack signUpDesktop(double height, double width) {
@@ -226,10 +252,9 @@ class _LogInState extends State<LogIn> {
                             var response= await http.post(Uri.https(Helper.baseUrl,Helper.baseEndpoint+"login")
                             ,body:jsonEncode([emailValue,passwordValue]));
                             var code=response.statusCode;
-                            var data=jsonDecode(response.body);
-                            String emaill=data[1];
-
                             if(code==200){
+                              var data=jsonDecode(response.body);
+                              String emaill=data[1];
                               showLoadingDialog(context, emaill);
 
                             } else{
@@ -253,7 +278,9 @@ class _LogInState extends State<LogIn> {
                           fontSize: 20
                         ),),
                       ),
-                    )
+                    ),
+                    SizedBox(height: 10,),
+                      toRegister()
                   ],
                 ),
               )

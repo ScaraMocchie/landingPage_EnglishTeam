@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:landing_page/controller/model.dart';
 import 'package:landing_page/controller/textfield.dart';
+import 'package:landing_page/screen/landingpage.dart';
+import 'package:landing_page/screen/login.dart';
 import 'package:landing_page/screen/reedemCode_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -90,8 +92,13 @@ class _SignUpState extends State<SignUp> {
     var height = size.height;
     var width = size.width;
 
-    return Scaffold(
-      body: (width<height)?signUpMobile(height, width):signUpDesktop(height, width),
+    return WillPopScope(
+      onWillPop: ()async{
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
+      return true;},
+      child: Scaffold(
+        body: (width<height)?signUpMobile(height, width):signUpDesktop(height, width),
+      ),
     );
   }
 
@@ -172,7 +179,9 @@ class _SignUpState extends State<SignUp> {
                             fontSize: 20
                           ),),
                         ),
-                      )
+                      ),
+                      SizedBox(height: 10,),
+                      toLogin()
                     ],
                   ),
                 ),
@@ -274,7 +283,9 @@ class _SignUpState extends State<SignUp> {
                           fontSize: 20
                         ),),
                       ),
-                    )
+                    ),
+                    SizedBox(height: 10,),
+                    toLogin()
                   ],
                 ),
               )
@@ -283,6 +294,21 @@ class _SignUpState extends State<SignUp> {
         )
       ],
     );
+  }
+
+  Row toLogin() {
+    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Already a member?"),
+                        SizedBox(width: 5,),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>LogIn()));
+                          },
+                          child: Text("Login", style: TextStyle(color: const Color(0xff528DE7), fontWeight: FontWeight.bold),),)
+                      ],
+                    );
   }
 
   
