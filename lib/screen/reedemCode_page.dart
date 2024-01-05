@@ -120,6 +120,7 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                     ),
                   ),
                   InkWell(
+                    onTap: (){},
                     child: Container(
                       width: 250,
                       alignment: Alignment.center,
