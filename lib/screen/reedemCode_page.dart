@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
-import 'package:landing_page/controller/textfield.dart';
+import '../controller/textfield.dart';
 import 'package:http/http.dart' as http;
-import 'package:landing_page/screen/login.dart';
+import '../screen/login.dart';
 import 'dart:convert';
 import '../controller/httpHelp.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class ReedemCodePage extends StatefulWidget {
   final String reedemCode;
   final String email;
@@ -120,7 +120,14 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                     ),
                   ),
                   InkWell(
-                    onTap: (){},
+                    onTap: ()async {
+                    String url = 'payment-links/1704897712581';
+                    await launchUrl(Uri(
+                      scheme: "https",
+                      host: 'app.midtrans.com',
+                      path: url,
+                    ));
+                  },
                     child: Container(
                       width: 250,
                       alignment: Alignment.center,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:landing_page/controller/model.dart';
-import 'package:landing_page/screen/login.dart';
+import '../controller/model.dart';
+import '../screen/login.dart';
 
 
 class LandingPage extends StatefulWidget {

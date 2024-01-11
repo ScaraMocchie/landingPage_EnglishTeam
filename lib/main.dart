@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:landing_page/screen/landingpage.dart';
-import 'package:landing_page/screen/signup.dart';
+import '../screen/landingpage.dart';
+import '../screen/signup.dart';
 
 void main() {
   runApp(const MyApp());

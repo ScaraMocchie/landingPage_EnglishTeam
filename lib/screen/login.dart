@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:landing_page/controller/model.dart';
-import 'package:landing_page/controller/textfield.dart';
-import 'package:landing_page/screen/landingpage.dart';
-import 'package:landing_page/screen/reedemCode_page.dart';
+import '../controller/model.dart';
+import '../controller/textfield.dart';
+import '../screen/landingpage.dart';
+import '../screen/reedemCode_page.dart';
 import 'package:http/http.dart' as http;
-import 'package:landing_page/screen/signup.dart';
+import '../screen/signup.dart';
 import 'dart:convert';
 import '../controller/httpHelp.dart';
 class LogIn extends StatefulWidget {

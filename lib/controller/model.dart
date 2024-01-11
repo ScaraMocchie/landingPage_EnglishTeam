@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:landing_page/screen/signup.dart';
+import '../screen/signup.dart';
 
 class Models {
   static var linearGradient = LinearGradient(begin: Alignment.centerRight, end: Alignment.centerLeft,colors: [
