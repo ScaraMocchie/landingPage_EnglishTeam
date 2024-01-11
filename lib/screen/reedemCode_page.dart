@@ -63,10 +63,10 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                             children: [
                   Text("Thank you for pre-registering!", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                   SvgPicture.asset("assets/images/preregist_gift.svg", height: 150,),
-                  SizedBox(height: 20,),
-                  Text("Your redemption will be sent to your email", textAlign: TextAlign.center,),
+                
+                  
                   TextFieldCustom.TemplateTF(reedemController,"Reedem Code"),
-                  Text(status, style: TextStyle(color: statusColor),),
+                  Text(status, style: TextStyle(color: statusColor, fontSize: 12),),
                   
                   InkWell(
                     onTap:()async{ 
@@ -115,7 +115,7 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                         color: const Color(0xff528DE7),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                      margin: EdgeInsets.only(top: 20),
+                      margin: EdgeInsets.only(top: 10),
                       child: Text("Apply Reedem Code", style: TextStyle(color: Colors.white, fontSize: 17),),
                     ),
                   ),
@@ -132,7 +132,9 @@ class _ReedemCodePageState extends State<ReedemCodePage> {
                       margin: EdgeInsets.only(top: 10),
                       child: Text("BUY 1 GET 2 NOW", style: TextStyle(color: Colors.white, fontSize: 17),),
                     ),
-                  )
+                  ),
+                  SizedBox(height: 10,),
+                  Text("Your redemption will be sent to your email", textAlign: TextAlign.center,),
                             ],
                           ),
                 ),
